@@ -7,6 +7,7 @@ void main(List<String> arguments) async {
   print('Press 1 to create driver only');
   print('Press 2 to create driver and assign shipment');
   print('Press 3 to create shipment for already assigned number');
+  print('Press 4 to get company ID');
 
   String value = stdin.readLineSync() ?? '';
 
@@ -16,8 +17,9 @@ void main(List<String> arguments) async {
   if (phone.length >= 10) {
     if (value == '1') {
       print('1 was selected');
-      await getShipperToken().then(
-          (String token) => createDriver(token: token, phoneNumber: phone));
+      await getShipperToken().then((String token) => getCompanyID(token: token)
+          .then((String companyID) => createDriver(
+              token: token, phoneNumber: phone, companyID: companyID)));
     } else if (value == '2') {
       print('2 was selected');
       await getShipperToken().then((String token) => getAVehicle(token: token)
@@ -28,20 +30,30 @@ void main(List<String> arguments) async {
           getADriver(token: token, phoneNumber: phone).then((String driverID) =>
               getAVehicle(token: token).then((String vehicleID) =>
                   getStartLocation(token: token).then((String locationID) {
-                    print('Assigning shipment to driver:$phone\n');
 
+
+
+
+
+                    // driverID = '4c1dedfc-07c8-4914-b31f-fe5cfb92b3e5';
+                    // vehicleID ='';
+                    // locationID='';
                     if (token.isEmpty ||
                         driverID.isEmpty ||
                         vehicleID.isEmpty ||
                         locationID.isEmpty) {
                     } else {
+                      print('Assigning shipment to driver:$phone\n');
                       assignShipmentCreate(
                           token: token,
                           driverId: driverID,
-                          locationId: newLocationID,
-                          vehicleId: newVehicleID);
+                          locationId: locationID,
+                          vehicleId: vehicleID);
                     }
                   }))));
+    } else if (value == '4') {
+      await getShipperToken()
+          .then((String token) => getCompanyID(token: token));
     } else {
       print('Invalid response');
     }

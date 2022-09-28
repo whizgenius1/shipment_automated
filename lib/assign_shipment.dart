@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 
 const _companyId = "cff2b57d-11d5-4415-a050-7924ca944b2f";
 
-const String newCompanyID = ' 4cb03025-58fb-490e-aec7-128afd2a1bce';
+const String newCompanyID = '1c867c04-6ad3-4e95-a5e4-4123b1eb05c4';
 const String newLocationID = 'a0d0af5e-e600-4b73-b077-f4d41b1de9e8';
 const String newVehicleID = 'b6020cef-f0f0-4e2b-9c3f-4b8ddfe06bc3';
 
@@ -259,61 +259,61 @@ Map<String, dynamic> shipment = {
         }
       ]
     },
-    // {
-    //     "order_type": "pre_paid",
-    //     "order_date": "2022-05-06 09:30:00",
-    //     "order_value": "23",
-    //     "order_history": {
-    //         "defined": "later"
-    //     },
-    //     "options": {
-    //         "flash_number": "8130403603"
-    //     },
-    //     "customer": {
-    //         "name": "Ayo",
-    //         "address": "Surulere LG, Lagos, Nigeria",
-    //         "address_latitude": "6.45672",
-    //         "address_longitude": "3.43452",
-    //         "phone_number": "8153796851",
-    //         "phone_code": "234",
-    //         "customer_options": {
-    //             "account_number": "0141055267",
-    //             "account_name": "Ayo Sax Ventures",
-    //             "account_type": "Savings",
-    //             "bank_name": "Access Bank"
-    //         },
-    //         "classifications": {
-    //             "defined": "later"
-    //         },
-    //         "integration_id": "903211a"
-    //     },
-    //     "classfications": {
-    //         "defined": "later"
-    //     },
-    //     "integration_id": "092l11",
-    //     "order_details": [
-    //         {
-    //             "name": "Ayo detergent soap",
-    //             "code": "ft4090",
-    //             "price": "150.00",
-    //             "weight": "2.75",
-    //             "weight_uom": "kg",
-    //             "height": "2",
-    //             "height_uom": "ft",
-    //             "width": "2.2",
-    //             "width_uom": "m",
-    //             "length": "1.75",
-    //             "length_uom": "m",
-    //             "sku_uom": "g",
-    //             "sku_no_pieces": "10",
-    //             "classifications": {
-    //                 "defined": "later"
-    //             },
-    //             "quantity": 20,
-    //             "integration_id": "90211k1"
-    //         }
-    //     ]
-    // },
+    {
+        "order_type": "pre_paid",
+        "order_date": "2022-05-06 09:30:00",
+        "order_value": "23",
+        "order_history": {
+            "defined": "later"
+        },
+        "options": {
+            "flash_number": "8130403603"
+        },
+        "customer": {
+            "name": "Ayo",
+            "address": "Surulere LG, Lagos, Nigeria",
+            "address_latitude": "6.45672",
+            "address_longitude": "3.43452",
+            "phone_number": "8153796851",
+            "phone_code": "234",
+            "customer_options": {
+                "account_number": "0141055267",
+                "account_name": "Ayo Sax Ventures",
+                "account_type": "Savings",
+                "bank_name": "Access Bank"
+            },
+            "classifications": {
+                "defined": "later"
+            },
+            "integration_id": "903211a"
+        },
+        "classfications": {
+            "defined": "later"
+        },
+        "integration_id": "092l11",
+        "order_details": [
+            {
+                "name": "Ayo detergent soap",
+                "code": "ft4090",
+                "price": "150.00",
+                "weight": "2.75",
+                "weight_uom": "kg",
+                "height": "2",
+                "height_uom": "ft",
+                "width": "2.2",
+                "width_uom": "m",
+                "length": "1.75",
+                "length_uom": "m",
+                "sku_uom": "g",
+                "sku_no_pieces": "10",
+                "classifications": {
+                    "defined": "later"
+                },
+                "quantity": 20,
+                "integration_id": "90211k1"
+            }
+        ]
+    },
     // {
     //     "order_type": "pre_paid",
     //     "order_date": "2022-05-06 09:30:00",
@@ -387,7 +387,7 @@ Map<String, String> _authHeader({required String token}) => {
 //const String baseUrl = 'https://sem-dev.movam.app/api/v1/';
 const String baseUrl = 'https://movam-sem-app-prod.movam.app/api/v1/';
 const String loginURL = '${baseUrl}guest/login';
-const String getCompanyIdURL = '${baseUrl}company/view';
+const String getCompanyIdURL = '${baseUrl}companies/view';
 const String createDriverURL = '${baseUrl}drivers/insert';
 const String getDriverURL = '${baseUrl}drivers/view';
 const String vehiclesURL = '${baseUrl}vehicles/view';
@@ -442,10 +442,22 @@ Future<String> getCompanyID({required String token}) {
       .then((Response response) {
     print(response.statusCode);
     print(response.body);
+    if(response.statusCode==200){
+      Map<String,dynamic> responseBody=json.decode(response.body)??{};
+      List data = responseBody['data']??[];
+      String companyID =
+      data.isEmpty ? '' : data[Random().nextInt(data.length)]['id'];
+      companyID.isEmpty
+          ? print('No company found\n')
+          : print('Company ID gotten successfully: $companyID\n');
+      return companyID;
+    }
+    print('${response.statusCode}could not get company\n');
     return '';
   });
 }
 
+// 8155077911
 Future<String> createDriver(
     {required String token,
     required String phoneNumber,
@@ -462,6 +474,9 @@ Future<String> createDriver(
   };
 
   String encodedBody = json.encode(body);
+
+  print(createDriverURL);
+  print(encodedBody);
 
   return post(Uri.parse(createDriverURL),
           body: encodedBody, headers: _authHeader(token: token))
@@ -484,6 +499,7 @@ Future<String> createDriver(
     writeJsonFile(map: configJson);
 
     print('${response.statusCode} could not create driver\n');
+    print(response.body);
 
     return '';
   });
@@ -493,17 +509,19 @@ Future<String> createDriver(
 Future<String> getADriver(
     {String url = getDriverURL,
     required String token,
-    String phoneNumber = '8155077910'}) async {
+    String phoneNumber =''}) async {
   bool foundDriver = false;
   print('getting driver');
   String urll = url;
   return get(Uri.parse(urll), headers: _authHeader(token: token))
       .then((Response response) {
     if (response.statusCode == 200) {
+
       Map<String, dynamic> responseBody = json.decode(response.body) ?? {};
       List data = responseBody['data'] ?? [];
       Map links = responseBody['links'] ?? {};
       urll = links['next'] ?? '';
+      print(data);
       for (int i = 0; i < data.length; i++) {
         Map<String, dynamic> phone = data[i]['phone'] ?? {};
         String number = phone['number'] ?? '';
