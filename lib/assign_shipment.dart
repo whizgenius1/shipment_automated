@@ -39,13 +39,13 @@ Map<String, dynamic> shipment = {
       "order_date": "2022-05-16 14:27:00",
       "order_value": "23",
       "order_history": {"defined": "later"},
-      "options": {"flash_number": "08130403603", "master_order_id": null},
+      "options": {"flash_number": "08105394683", "master_order_id": null},
       "customer": {
         "name": "Customer Order 1",
         "address": "Yaba LCDA, Lagos, Nigeria",
         "address_latitude": "6.972",
         "address_longitude": "3.23452",
-        "phone_number": "8034993503",
+        "phone_number": "08105394683",
         "phone_code": "234",
         "customer_options": {
           "account_number": "0141055267",
@@ -174,13 +174,13 @@ Map<String, dynamic> shipment = {
       "order_date": "2022-05-15 13:18:00",
       "order_value": "5000",
       "order_history": {"defined": "later"},
-      "options": {"flash_number": "08130403603"},
+      "options": {"flash_number": "08106503376"},
       "customer": {
         "name": "Customer Order 2",
         "address": "Bariga LCDA, Lagos, Nigeria",
         "address_latitude": "6.55672",
         "address_longitude": "3.23452",
-        "phone_number": "07066419262",
+        "phone_number": "08106503376",
         "phone_code": "234",
         "customer_options": {
           "account_number": "0141055267",
@@ -219,13 +219,13 @@ Map<String, dynamic> shipment = {
       "order_date": "2022-05-06 09:30:00",
       "order_value": "23",
       "order_history": {"defined": "later"},
-      "options": {"flash_number": "8130403603"},
+      "options": {"flash_number": "08035761514"},
       "customer": {
         "name": "Ayo",
         "address": "Surulere LG, Lagos, Nigeria",
         "address_latitude": "6.45672",
         "address_longitude": "3.43452",
-        "phone_number": "8147860862",
+        "phone_number": "08035761514",
         "phone_code": "234",
         "customer_options": {
           "account_number": "0141055267",
@@ -267,14 +267,14 @@ Map<String, dynamic> shipment = {
             "defined": "later"
         },
         "options": {
-            "flash_number": "8130403603"
+            "flash_number": "08163223507"
         },
         "customer": {
             "name": "Ayo",
             "address": "Surulere LG, Lagos, Nigeria",
             "address_latitude": "6.45672",
             "address_longitude": "3.43452",
-            "phone_number": "8153796851",
+            "phone_number": "08163223507",
             "phone_code": "234",
             "customer_options": {
                 "account_number": "0141055267",
@@ -384,8 +384,8 @@ Map<String, String> _authHeader({required String token}) => {
       "Authorization": "Bearer $token"
     };
 
-//const String baseUrl = 'https://sem-dev.movam.app/api/v1/';
-const String baseUrl = 'https://movam-sem-app-prod.movam.app/api/v1/';
+const String baseUrl = 'https://sem-dev.movam.app/api/v1/';
+//const String baseUrl = 'https://movam-sem-app-prod.movam.app/api/v1/';
 const String loginURL = '${baseUrl}guest/login';
 const String getCompanyIdURL = '${baseUrl}companies/view';
 const String createDriverURL = '${baseUrl}drivers/insert';
